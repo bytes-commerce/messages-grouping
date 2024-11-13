@@ -12,8 +12,9 @@ use Symfony\Component\Messenger\Exception\HandlerFailedException;
 
 class TestSubscriberController extends AbstractController
 {
-    private MessageBusInterface $messageBus;
-    private MessageGroupSubscriber $subscriber;
+    private readonly MessageBusInterface $messageBus;
+
+    private readonly MessageGroupSubscriber $subscriber;
 
     public function __construct(MessageBusInterface $messageBus, MessageGroupSubscriber $subscriber)
     {
@@ -21,9 +22,7 @@ class TestSubscriberController extends AbstractController
         $this->subscriber = $subscriber;
     }
 
-    /**
-     * @Route("/test-dispatch", name="test_dispatch")
-     */
+    #[Route(path: '/test-dispatch', name: 'test_dispatch')]
     public function testDispatch(): Response
     {
         try {

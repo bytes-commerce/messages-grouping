@@ -4,7 +4,7 @@ namespace App\Config;
 
 class EventDispatcherConfig
 {
-    private int $maxGroupedEvents;
+    private readonly int $maxGroupedEvents;
 
     public function __construct(int $maxGroupedEvents = 10)
     {

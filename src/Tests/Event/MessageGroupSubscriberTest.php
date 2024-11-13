@@ -11,10 +11,14 @@ use Symfony\Component\Messenger\MessageBusInterface;
 class MessageGroupSubscriberTest extends TestCase
 {
     private MessageGroupSubscriber $subscriber;
-    private $messageBusMock;
-    private $processorMock;
-    private $loggerMock;
-    private $configMock;
+
+    private \PHPUnit\Framework\MockObject\MockObject $messageBusMock;
+
+    private \PHPUnit\Framework\MockObject\MockObject $processorMock;
+
+    private \PHPUnit\Framework\MockObject\MockObject $loggerMock;
+
+    private \PHPUnit\Framework\MockObject\MockObject $configMock;
 
 
     protected function setUp(): void
@@ -40,6 +44,7 @@ class MessageGroupSubscriberTest extends TestCase
         // Check that the message queue contains the dispatched message
         $messageQueue = (new \ReflectionClass($this->subscriber))->getProperty('messageQueue');
         $messageQueue->setAccessible(true);
+
         $queuedMessages = $messageQueue->getValue($this->subscriber);
 
         $this->assertArrayHasKey(1, $queuedMessages);
@@ -93,16 +98,16 @@ class MessageGroupSubscriberTest extends TestCase
 
         try{
             $this->subscriber->processGroupedMessages();
-        } catch (\RuntimeException $e) {
-            $this->assertEquals("Message sending failed", $e->getMessage());
+        } catch (\RuntimeException $runtimeException) {
+            $this->assertEquals("Message sending failed", $runtimeException->getMessage());
         }
     }
 
     public function testProcessGroupedMessagesWithCustomLogic(): void
     {
-        $customLogic = function (array $messageQueue) {
+        $customLogic = function (array $messageQueue): void {
             foreach ($messageQueue as $taskId => $messages) {
-                echo "Processed task $taskId with " . count($messages) . " messages.";
+                echo sprintf('Processed task %s with ', $taskId) . count($messages) . " messages.";
             }
         };
 

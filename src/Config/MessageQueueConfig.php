@@ -4,8 +4,9 @@ namespace App\Config;
 
 class MessageQueueConfig
 {
-    private int $retryLimit;
-    private int $groupingInterval;
+    private readonly int $retryLimit;
+
+    private readonly int $groupingInterval;
 
     public function __construct(int $retryLimit = 3, int $groupingInterval = 300)
     {

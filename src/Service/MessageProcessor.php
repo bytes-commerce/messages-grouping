@@ -7,7 +7,7 @@ class MessageProcessor
     public function sendGroupedMessage(int $taskId, array $messages): bool
     {
         try{
-            if (empty($messages)) {
+            if ($messages === []) {
                 return true;
             }
 
@@ -15,7 +15,7 @@ class MessageProcessor
             $this->sendEmail($taskId, $messageContent);
 
             return true;
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             echo "Failed, something went wrong!";
             return false;
         };
@@ -33,6 +33,6 @@ class MessageProcessor
 
     private function sendEmail(int $taskId, string $content): void
     {
-        echo "Sending email for Task ID $taskId:\n$content";
+        echo "Sending email for Task ID {$taskId}:\n{$content}";
     }
 }

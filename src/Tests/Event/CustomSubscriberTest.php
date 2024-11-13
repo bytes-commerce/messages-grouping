@@ -13,9 +13,19 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class CustomSubscriberTest extends TestCase
 {
+    /**
+     * @var (\App\Config\MessageQueueConfig & \PHPUnit\Framework\MockObject\MockObject)
+     */
+    public \PHPUnit\Framework\MockObject\MockObject $configMock;
+    /**
+     * @var (\PHPUnit\Framework\MockObject\MockObject & \Psr\Log\LoggerInterface)
+     */
+    public \PHPUnit\Framework\MockObject\MockObject $loggerMock;
     private CustomSubscriber $customSubscriber;
-    private $messageBusMock;
-    private $processorMock;
+
+    private \PHPUnit\Framework\MockObject\MockObject $messageBusMock;
+
+    private \PHPUnit\Framework\MockObject\MockObject $processorMock;
 
     /**
      * @throws Exception

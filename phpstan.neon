@@ -1,0 +1,11 @@
+parameters:
+    level: 8
+    paths:
+        - src
+        - tests
+    bootstrapFiles:
+        - %rootDir%/../../vendor/autoload.php
+    reportUnmatchedIgnoredErrors: true
+
+includes:
+    - vendor/phpstan/phpstan-symfony/extension.neon

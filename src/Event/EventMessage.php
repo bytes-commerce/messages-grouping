@@ -4,8 +4,9 @@ namespace App\Event;
 
 class EventMessage
 {
-    private int $taskId;
-    private string $content;
+    private readonly int $taskId;
+
+    private readonly string $content;
 
     public function __construct(int $taskId, ?string $content = '')
     {

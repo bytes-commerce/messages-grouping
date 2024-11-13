@@ -14,8 +14,9 @@ use Symfony\Component\Messenger\MessageBusInterface;
 #[AsCommand(name: 'app:test-message-group')]
 class TestMessageGroupSubscriberCommand extends Command
 {
-    private MessageBusInterface $messageBus;
-    private MessageGroupSubscriber $subscriber;
+    private readonly MessageBusInterface $messageBus;
+
+    private readonly MessageGroupSubscriber $subscriber;
 
     public function __construct(MessageBusInterface $messageBus, MessageGroupSubscriber $subscriber)
     {

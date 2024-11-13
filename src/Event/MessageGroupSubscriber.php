@@ -13,11 +13,10 @@ class MessageGroupSubscriber implements EventSubscriberInterface
 {
 
     private array $messageQueue = [];
-    private MessageBusInterface $messageBus;
     protected MessageProcessor $processor;
-    private MessageQueueConfig $config;
-    private LoggerInterface $logger;
-    private \Closure $processingLogic;
+    private readonly LoggerInterface $logger;
+
+    private readonly \Closure $processingLogic;
 
     public function __construct(
         MessageBusInterface $messageBus,
@@ -27,9 +26,7 @@ class MessageGroupSubscriber implements EventSubscriberInterface
         \Closure $processingLogic = null
 
     ) {
-        $this->messageBus = $messageBus;
         $this->processor = $processor;
-        $this->config = $config;
         $this->logger = $logger;
         $this->processingLogic = $processingLogic ?? $this->getDefaultProcessingLogic();
     }
@@ -55,12 +52,12 @@ class MessageGroupSubscriber implements EventSubscriberInterface
 
     private function getDefaultProcessingLogic(): \Closure
     {
-        return function (array $messageQueue) {
+        return function (array $messageQueue): void {
             foreach ($messageQueue as $taskId => $messages) {
                 try {
                     $this->processor->sendGroupedMessage($taskId, $messages);
                 } catch (\Exception $e) {
-                    $this->logger->error("Failed to process messages for task {$taskId}", [
+                    $this->logger->error('Failed to process messages for task ' . $taskId, [
                         'error' => $e->getMessage(),
                     ]);
                 }

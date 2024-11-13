@@ -19,7 +19,7 @@ class CustomSubscriber extends MessageGroupSubscriber
 
     protected function createProcessingLogic(): callable
     {
-        return function (array $messages) {
+        return function (array $messages): void {
             foreach ($messages as $taskId => $messageGroup) {
                 $this->processor->sendGroupedMessage($taskId, $messageGroup);
             }
