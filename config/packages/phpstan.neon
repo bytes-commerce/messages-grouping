@@ -1,0 +1,18 @@
+parameters:
+    level: 8
+    paths:
+        - src
+        - tests
+    checkMissingIterableValueType: true
+    checkMissingTypehints: true
+    checkGenericClassInNonGenericObjectType: true
+    checkUninitializedProperties: true
+
+    # Exclude specific files or directories if needed
+    excludePaths:
+        - %currentWorkingDirectory%/src/Migrations/*
+
+    # Include additional extensions, if required for Symfony or Doctrine
+includes:
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-doctrine/extension.neon

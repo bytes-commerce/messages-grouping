@@ -20,5 +20,24 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Event\MessageGroupSubscriber:
+        arguments:
+            $messageBus: '@messenger.bus.default'
+            $processor: '@App\Service\MessageProcessor'
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    App\Event\CustomSubscriber:
+        parent: App\Event\MessageGroupSubscriber
+        arguments:
+            $processor: '@App\Service\MessageProcessor'
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    App\Service\MessageProcessor: ~
+
+#    App\Handler\EventMessageHandler:
+#        tags: [ 'messenger.message_handler' ]
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
