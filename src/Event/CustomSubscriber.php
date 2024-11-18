@@ -1,8 +1,9 @@
 <?php
-namespace App\Event;
+namespace MessagesGrouping\Event;
 
-use App\Config\MessageQueueConfig;
-use App\Service\MessageProcessor;
+use Closure;
+use MessagesGrouping\Config\MessageQueueConfig;
+use MessagesGrouping\Service\MessageProcessor;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -17,7 +18,7 @@ class CustomSubscriber extends MessageGroupSubscriber
         parent::__construct($messageBus, $processor, $config, $logger, $this->createProcessingLogic());
     }
 
-    protected function createProcessingLogic(): callable
+    protected function createProcessingLogic(): Closure|null
     {
         return function (array $messages): void {
             foreach ($messages as $taskId => $messageGroup) {

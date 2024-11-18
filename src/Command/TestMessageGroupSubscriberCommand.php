@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Command;
+namespace MessagesGrouping\Command;
 
-use App\Event\EventMessage;
-use App\Event\MessageGroupSubscriber;
+use MessagesGrouping\Event\EventMessage;
+use MessagesGrouping\Event\MessageGroupSubscriber;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

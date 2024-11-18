@@ -22,4 +22,8 @@ return static function (RectorConfig $rectorConfig): void {
 
     // Link to PHPStan configuration
     $rectorConfig->phpstanConfig(__DIR__ . '/phpstan.neon');
+
+    $rectorConfig->skip([
+        __DIR__ . '/vendor',
+    ]);
 };

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Tests\Service;
+namespace MessagesGrouping\Tests\Service;
 
-use App\Service\MessageProcessor;
-use App\Event\EventMessage;
+use MessagesGrouping\Service\MessageProcessor;
+use MessagesGrouping\Event\EventMessage;
+use MessagesGrouping\Service\MessageProcessorInterface;
 use PHPUnit\Framework\TestCase;
 
 class MessageProcessorTest extends TestCase
@@ -45,17 +46,19 @@ class MessageProcessorTest extends TestCase
 
     public function testSendGroupedMessageFailure(): void
     {
-        $processor = $this->getMockBuilder(MessageProcessor::class)
+        $processor = $this->getMockBuilder(MessageProcessorInterface::class)
             ->onlyMethods(['sendGroupedMessage'])
             ->getMock();
 
-        $processor->method('sendGroupedMessage')
-            ->will($this->throwException(new \RuntimeException("Failed to send")));
+        $eventMessage = new EventMessage(1, "Task status update");
+        $processor->expects($this->once())
+            ->method('sendGroupedMessage')
+            ->with(1, [$eventMessage])
+            ->willThrowException(new \RuntimeException("Failed to send"));
 
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Failed to send');
 
-        $eventMessage = new EventMessage(1, "Task status update");
         $processor->sendGroupedMessage(1, [$eventMessage]);
     }
 }

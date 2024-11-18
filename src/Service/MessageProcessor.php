@@ -1,12 +1,18 @@
 <?php
 
-namespace App\Service;
+namespace MessagesGrouping\Service;
 
-class MessageProcessor
+use MessagesGrouping\Event\EventMessage;
+
+final class MessageProcessor implements MessageProcessorInterface
 {
+
+    /**
+     * @param array<EventMessage> $messages
+     */
     public function sendGroupedMessage(int $taskId, array $messages): bool
     {
-        try{
+        try {
             if ($messages === []) {
                 return true;
             }
@@ -18,9 +24,12 @@ class MessageProcessor
         } catch (\Exception $exception) {
             echo "Failed, something went wrong!";
             return false;
-        };
+        }
     }
 
+    /**
+     * @param array<EventMessage> $messages
+     */
     private function createSummaryContent(array $messages): string
     {
         $content = "Task Status Updates:\n";

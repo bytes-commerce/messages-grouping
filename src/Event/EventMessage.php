@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Event;
+namespace MessagesGrouping\Event;
 
 class EventMessage
 {

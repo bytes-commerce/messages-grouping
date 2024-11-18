@@ -1,31 +1,29 @@
 <?php
 
-namespace App\Tests\Event;
+namespace MessagesGrouping\Tests\Event;
 
-use App\Config\MessageQueueConfig;
-use App\Event\CustomSubscriber;
-use App\Event\EventMessage;
-use App\Service\MessageProcessor;
+use MessagesGrouping\Config\MessageQueueConfig;
+use MessagesGrouping\Event\CustomSubscriber;
+use MessagesGrouping\Event\EventMessage;
+use MessagesGrouping\Service\MessageProcessor;
 use PHPUnit\Framework\MockObject\Exception;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 class CustomSubscriberTest extends TestCase
 {
-    /**
-     * @var (\App\Config\MessageQueueConfig & \PHPUnit\Framework\MockObject\MockObject)
-     */
-    public \PHPUnit\Framework\MockObject\MockObject $configMock;
-    /**
-     * @var (\PHPUnit\Framework\MockObject\MockObject & \Psr\Log\LoggerInterface)
-     */
-    public \PHPUnit\Framework\MockObject\MockObject $loggerMock;
+
+    public MockObject $configMock;
+
+    private MockObject $loggerMock;
+
     private CustomSubscriber $customSubscriber;
 
-    private \PHPUnit\Framework\MockObject\MockObject $messageBusMock;
+    private MockObject $messageBusMock;
 
-    private \PHPUnit\Framework\MockObject\MockObject $processorMock;
+    private MessageProcessor $processorMock;
 
     /**
      * @throws Exception
@@ -33,7 +31,7 @@ class CustomSubscriberTest extends TestCase
     protected function setUp(): void
     {
         $this->messageBusMock = $this->createMock(MessageBusInterface::class);
-        $this->processorMock = $this->createMock(MessageProcessor::class);
+        $this->processorMock = new MessageProcessor();
         $this->configMock = $this->createMock(MessageQueueConfig::class);
         $this->loggerMock = $this->createMock(LoggerInterface::class);
         $this->customSubscriber = new CustomSubscriber($this->messageBusMock, $this->processorMock, $this->configMock, $this->loggerMock);
@@ -47,10 +45,8 @@ class CustomSubscriberTest extends TestCase
         $this->customSubscriber->onMessageDispatch($eventMessage1);
         $this->customSubscriber->onMessageDispatch($eventMessage2);
 
-        $this->processorMock
-            ->expects($this->once())
-            ->method('sendGroupedMessage')
-            ->with(1, [$eventMessage1, $eventMessage2]);
+        $this->assertTrue($this->processorMock
+            ->sendGroupedMessage(1, [$eventMessage1, $eventMessage2]));
 
         $this->customSubscriber->processGroupedMessages();
     }

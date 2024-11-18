@@ -1,9 +1,0 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
-
-test_dispatch:
-    path: /test-dispatch
-    controller: App\Controller\TestSubscriberController::testDispatch

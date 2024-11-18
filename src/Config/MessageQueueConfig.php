@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Config;
+namespace MessagesGrouping\Config;
 
 class MessageQueueConfig
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Handler;
+namespace MessagesGrouping\Handler;
 
-use App\Event\EventMessage;
+use MessagesGrouping\Event\EventMessage;
 use Symfony\Component\Messenger\Handler\BatchHandlerInterface;
 
 
