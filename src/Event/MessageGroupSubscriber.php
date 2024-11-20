@@ -28,7 +28,7 @@ class MessageGroupSubscriber implements EventSubscriberInterface
 
     public function __construct(
         MessageBusInterface $messageBus,
-        MessageProcessor $processor,
+        private readonly MessageProcessor $processor,
         MessageQueueConfig $config,
         LoggerInterface $logger,
         \Closure|null $processingLogic = null
