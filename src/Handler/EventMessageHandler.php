@@ -15,6 +15,5 @@ class EventMessageHandler implements BatchHandlerInterface
 
     public function flush(bool $force): void
     {
-        // TODO: Implement flush() method.
     }
 }

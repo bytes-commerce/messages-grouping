@@ -30,11 +30,9 @@ class MessageGroupSubscriber implements EventSubscriberInterface
         MessageBusInterface $messageBus,
         private readonly MessageProcessor $processor,
         MessageQueueConfig $config,
-        LoggerInterface $logger,
+        private readonly LoggerInterface $logger,
         \Closure|null $processingLogic = null
     ) {
-        $this->processor = $processor;
-        $this->logger = $logger;
         $this->processingLogic = $processingLogic ?? $this->getDefaultProcessingLogic();
         $this->config = $config;
         $this->messageBus = $messageBus;
